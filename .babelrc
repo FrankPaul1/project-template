@@ -1,0 +1,9 @@
+{
+  "stage": 0,
+  "optional": [
+    "runtime",
+    "minification.memberExpressionLiterals",
+    "minification.propertyLiterals",
+    "spec.undefinedToVoid"
+  ]
+}
