@@ -39,31 +39,7 @@ export default function render(req, res) {
   const history = new History(path)
   logger.info(path)
 
-  const api = createAPI(
-    /**
-     * Server's createRequest() method
-     * You can modify headers, pathname, query, body to make different request
-     * from client's createRequest() method
-     *
-     * Example:
-     * You API server is `http://api.example.com` and it require accessToken
-     * on query, then you can assign accessToken (get from req) to query object
-     * before calling API
-     */
-    ({ method, headers = {}, pathname = '', query = {}, body = {}}) => {
-      // only use below config when use different api server
-      //const url = `${apiServer.urlPrefix}${pathname}`
-      const url = `http://${config.app.host}:${config.app.port}${pathname}`
-      logger.debug(cookie.serialize('react-redux-connect.id', req.cookies['react-redux-connect.id']))
-      return request(method, url)
-        .query(query)
-        .set('Cookie', cookie.serialize('react-redux-connect.id', req.cookies['react-redux-connect.id']))
-        .set(headers)
-        .send(body)
-    }
-  )
-
-  const store = createStore(api)
+  const store = createStore()
 
   ReactRouter.run(routes, location, async (err, routerState) => {
     try {

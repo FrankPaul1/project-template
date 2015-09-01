@@ -1,6 +1,9 @@
 import keyMirror from 'react/lib/keyMirror'
 
 export default {
-  Example: keyMirror({
+  Info: keyMirror({
+    Request: null,
+    Success: null,
+    Failure: null,
   })
 }

@@ -20,31 +20,10 @@ import '../../css/global.css'
 window.logger = createLogger()
 
 const history = new History()
-const api = createAPI(
-  /**
-   * Client's createRequest() method
-   */
-  ({ method, headers = {}, pathname, query = {}, body = {}}) => {
-    // when use different api server need to config this
-    // pathname = pathname.replace(new RegExp(`^${apiServer.urlPrefix}`), '')
-    // var url = `${apiServer.urlPrefix}${pathname}`
-    const url = pathname
 
-    return request(method, url)
-      .query(qs.stringify(query))
-      .set(headers)
-      .send(body)
-  }
-)
+const store = createStore((window.__INITIAL_STATE__ || {}))
 
-let __INITIAL_STATE__ = window.__INITIAL_STATE__
-/* global __INITIAL_STATE__:true */
-if (!__INITIAL_STATE__) {
-  __INITIAL_STATE__ = {}
-}
-const store = createStore(api, __INITIAL_STATE__)
-
-if (__ENV__ && __ENV__ === 'development') {
+if (window.__ENV__ === 'development') {
   React.render(
     <div>
       <div style={{marginRight: '300px'}}>

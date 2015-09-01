@@ -25,6 +25,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 
+app.use('/api/example/info', (req, res) => {
+  const info = 'information from server'
+  res.send(info).end()
+})
+
 app.use((req, res) => {
   render(req, res)
 })

@@ -3,36 +3,20 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { compose } from 'redux'
 import { devTools, persistState } from 'redux-devtools'
 import * as reducers from '../reducers'
-
-function promiseMiddleware(api, { getState }) {
-  return next =>
-    function _r(action) {
-      if (action && _.isFunction(action.then)) {
-        return action.then(_r)
-      }
-
-      if (_.isFunction(action)) {
-        return _r(action(api, getState))
-      }
-
-      return next(action)
-    }
-}
+import apiMiddleware from './apiMiddleware'
 
 export default function(api, initialState) {
   let createStoreWithMiddleware
   const reducer = combineReducers(reducers)
-  if (__CLIENT__ === true && __ENV__ && __ENV__ === 'development') {
+  if (__CLIENT__ && __ENV__ === 'development') {
     const finalCreateStore = compose(
       devTools(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
       createStore
     )
-    createStoreWithMiddleware = applyMiddleware(promiseMiddleware.bind(null,
-      api))(finalCreateStore)
+    createStoreWithMiddleware = applyMiddleware(apiMiddleware)(finalCreateStore)
   } else {
-    createStoreWithMiddleware = applyMiddleware(promiseMiddleware.bind(null,
-      api))(createStore)
+    createStoreWithMiddleware = applyMiddleware(apiMiddleware)(createStore)
   }
   return createStoreWithMiddleware(reducer, initialState)
 }

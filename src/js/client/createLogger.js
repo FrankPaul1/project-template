@@ -1,7 +1,7 @@
 /**
  * Created by acezou on 15/8/24.
  */
-import initWs from '../shared/utils/initWebsocket'
+import initWs from '../shared/lib/initWebsocket'
 /* global __CLIENT__, __ENV__ */
 export default function createLogger() {
   let logger

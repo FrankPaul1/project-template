@@ -12,7 +12,7 @@ export default class HelmetComponent extends React.Component {
     return (
       <Helmet
         title={this.props.title}
-        titleTemplate="杏树林后台-%s"
+        titleTemplate="杏树林-%s"
       />
     )
   }
