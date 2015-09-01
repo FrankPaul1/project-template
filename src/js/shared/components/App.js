@@ -13,8 +13,7 @@ import { info as InfoActionCreators } from '../actions'
 @connect(state => {
   return {Info: state.Info}
 }, dispatch => {
-  console.info('----------')
-  console.info(bindActionCreators(InfoActionCreators, dispatch))
+  logger.info('bindActionCreators runing')
   return bindActionCreators(InfoActionCreators, dispatch)
 })
 export default
@@ -28,8 +27,7 @@ class App extends React.Component {
     // you can log information anywhere, which will also log on server console
     // logger is global variable, support log & info & debug & error
     logger.info('this is log from client, but can also log on server console')
-    if(this.props.Info) logger.info(this.props.Info.toJS())
-    console.info(this.props)
+
     return (
       <div id="app">
         <Helmet title="Info" />

@@ -19,8 +19,8 @@ export default {
       [CALL_API]: {
         types: [ActionTypes.Info.Request, ActionTypes.Info.Success, ActionTypes.Info.Failure],
         res: api => api('/api/example/info'),
-        restInfo: 'rest info'
-      }
+        restInfo: 'rest info',
+      },
     }
   },
 }

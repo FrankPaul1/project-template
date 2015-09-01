@@ -1,11 +1,10 @@
-import _ from 'lodash'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { compose } from 'redux'
 import { devTools, persistState } from 'redux-devtools'
 import * as reducers from '../reducers'
 import apiMiddleware from './apiMiddleware'
 
-export default function(api, initialState) {
+export default function(initialState, params) {
   let createStoreWithMiddleware
   const reducer = combineReducers(reducers)
   if (__CLIENT__ && __ENV__ === 'development') {
@@ -14,9 +13,9 @@ export default function(api, initialState) {
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
       createStore
     )
-    createStoreWithMiddleware = applyMiddleware(apiMiddleware)(finalCreateStore)
+    createStoreWithMiddleware = applyMiddleware(apiMiddleware(params))(finalCreateStore)
   } else {
-    createStoreWithMiddleware = applyMiddleware(apiMiddleware)(createStore)
+    createStoreWithMiddleware = applyMiddleware(apiMiddleware(params))(createStore)
   }
   return createStoreWithMiddleware(reducer, initialState)
 }

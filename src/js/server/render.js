@@ -37,9 +37,8 @@ export default function render(req, res) {
   const { path, query } = req
   const location = new Location(path, query)
   const history = new History(path)
-  logger.info(path)
 
-  const store = createStore()
+  const store = createStore({}, req.cookies)
 
   ReactRouter.run(routes, location, async (err, routerState) => {
     try {

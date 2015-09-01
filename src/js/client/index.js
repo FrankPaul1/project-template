@@ -4,11 +4,8 @@ window.__SERVER__ = false
 import React from 'react'
 import History from 'react-router/lib/BrowserHistory'
 import { Provider } from 'react-redux'
-import request from 'superagent'
-import qs from 'qs'
 import HideableDebugPanel from './HideableDebugPanel'
 import createStore from '../shared/lib/createStore'
-import createAPI from '../shared/lib/createAPI'
 import Router from '../shared/AppRouter'
 import createLogger from './createLogger'
 

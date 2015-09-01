@@ -8,16 +8,17 @@ import createAPI from './createAPI'
 import { CALL_API } from '../constants/symbol'
 
 function actionWith(action, data) {
-  const finalAction = Object.assign({}, action, data);
-  delete finalAction[CALL_API];
-  return finalAction;
+  const finalAction = Object.assign({}, action, data)
+  delete finalAction[CALL_API]
+  return finalAction
 }
 
 function serializeCookie(cookies = {}) {
   return Object.keys(cookies).map(key => (cookie.serialize(key, cookies[key]))).join('; ')
 }
 
-export default ({dispatch, getState}) => next => action => {
+export default (params = {}) => ({dispatch, getState}) => next => _action => {
+  let action = _action
   if (typeof action === 'function') {
     action = action(dispatch, getState)
   }
@@ -46,7 +47,7 @@ export default ({dispatch, getState}) => next => action => {
         const url = `http://localhost:7777${pathname}`
         return request(method, url)
           .query(query)
-          // .set('Cookie', serializeCookie(req.cookies))
+          .set('Cookie', serializeCookie(params.cookies))
           .set(headers)
           .send(body)
       }
@@ -68,6 +69,7 @@ export default ({dispatch, getState}) => next => action => {
 
   return res(api).then(
     (result) => next(actionWith(action, {...rest, res: result, type: SUCCESS})),
-    (error) => next(actionWith(action, {...rest, res: error, type: FAILURE}))
+    (error) => next(actionWith(action, {...rest,
+      error: (error.message || 'Something bad happened'), type: FAILURE}))
   )
 }
