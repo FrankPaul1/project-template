@@ -3,6 +3,7 @@
  */
 /* global __SERVER__ */
 import request from 'superagent'
+import cookie from 'cookie'
 import createAPI from './createAPI'
 // import config from '../../server/config/config'
 import { CALL_API } from '../constants/symbol'
@@ -45,6 +46,7 @@ export default (params = {}) => ({dispatch, getState}) => next => _action => {
       ({ method, headers = {}, pathname = '', query = {}, body = {}}) => {
         // const url = `http://${config.app.host}:${config.app.port}${pathname}`
         const url = `http://localhost:7777${pathname}`
+
         return request(method, url)
           .query(query)
           .set('Cookie', serializeCookie(params.cookies))

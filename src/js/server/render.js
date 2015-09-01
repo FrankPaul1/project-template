@@ -7,7 +7,6 @@ import Location from 'react-router/lib/Location'
 import History from 'react-router/lib/MemoryHistory'
 import request from 'superagent'
 import qs from 'qs'
-import cookie from 'cookie'
 import createStore from '../shared/lib/createStore'
 import createAPI from '../shared/lib/createAPI'
 import routes from '../shared/routes'
@@ -38,7 +37,7 @@ export default function render(req, res) {
   const location = new Location(path, query)
   const history = new History(path)
 
-  const store = createStore({}, req.cookies)
+  const store = createStore({}, {cookies: req.cookies})
 
   ReactRouter.run(routes, location, async (err, routerState) => {
     try {
