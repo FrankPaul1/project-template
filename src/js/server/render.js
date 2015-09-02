@@ -47,8 +47,10 @@ export default function render(req, res) {
       }
 
       const { params, location } = routerState
-      console.log(location)
-      const prepareRouteMethods = routerState.components.map(component => component.prepareRoute)
+
+      const prepareRouteMethods = routerState.components.map(component => {
+        return component.prepareRoute
+      })
 
       for (let prepareRoute of prepareRouteMethods) {
         if (!prepareRoute) {

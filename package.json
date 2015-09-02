@@ -62,11 +62,12 @@
     "radium": "^0.13.4",
     "react": "^0.13.3",
     "react-helmet": "^1.1.0",
-    "react-redux": "^0.2.2",
+    "react-redux": "^2.0.0",
     "react-router": "1.0.0-beta3",
-    "redux-devtools": "^1.1.1",
-    "redux": "^1.0.1",
+    "redux": "^2.0.0",
+    "redux-devtools": "^2.0.0",
     "serve-favicon": "^2.3.0",
+    "shallowequal": "^0.2.2",
     "superagent": "^1.2.0",
     "ws": "^0.8.0"
   }

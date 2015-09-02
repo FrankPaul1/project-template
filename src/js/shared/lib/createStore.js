@@ -10,12 +10,18 @@ export default function(initialState, params) {
   if (__CLIENT__ && __ENV__ === 'development') {
     const finalCreateStore = compose(
       devTools(),
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
-      createStore
-    )
+      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+    )(createStore)
     createStoreWithMiddleware = applyMiddleware(apiMiddleware(params))(finalCreateStore)
   } else {
     createStoreWithMiddleware = applyMiddleware(apiMiddleware(params))(createStore)
+  }
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers')
+      store.replaceReducer(nextRootReducer)
+    })
   }
   return createStoreWithMiddleware(reducer, initialState)
 }

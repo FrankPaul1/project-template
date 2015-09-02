@@ -9,12 +9,12 @@ export default {
     return {
       clientInfo: 'this is info from client',
       /**
-       * if want to fetch data by http request, return an object includes key [CALL_API]
+       * if wanna fetch data by http request, the returned object must includes key named [CALL_API]
        *   |- types and res is needed,
        *       |- types is an array contains 3 types: request, http request success, http request failure
        *       |- res is a function which params is api that can call http interface
        *              by using like api('/example/url', 'POST', params),
-       *              the second and third params is not needed
+       *              the second and third params is not needed for api function
        */
       [CALL_API]: {
         types: [ActionTypes.Info.Request, ActionTypes.Info.Success, ActionTypes.Info.Failure],

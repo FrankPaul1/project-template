@@ -6,9 +6,10 @@ import prepareRoute from '../lib/prepareRoute'
 import { info as InfoActionCreators } from '../actions'
 
 @prepareRoute(async ({store}) => {
-  return await * [
-    store.dispatch(InfoActionCreators.getInfo()),
-  ]
+  //logger.info('prepareRoute runing')
+  //return await * [
+  //  store.dispatch(InfoActionCreators.getInfo()),
+  //]
 })
 @connect(state => {
   return {Info: state.Info}
@@ -16,12 +17,16 @@ import { info as InfoActionCreators } from '../actions'
   logger.info('bindActionCreators runing')
   return bindActionCreators(InfoActionCreators, dispatch)
 })
-export default
 class App extends React.Component {
   static propTypes = {
     children: PropTypes.object,
     Info: PropTypes.object.isRequired,
   }
+
+  //async componentWillMount() {
+  //  logger.info('----------------')
+  //  await this.props.getInfo()
+  //}
 
   render() {
     // you can log information anywhere, which will also log on server console
@@ -31,9 +36,18 @@ class App extends React.Component {
     return (
       <div id="app">
         <Helmet title="Info" />
-        <h1>APP</h1>
+        <h1>APP1</h1>
+        <h2>{this.props.Info.get('serverInfo')}</h2>
         {this.props.children}
       </div>
     )
   }
 }
+
+App.onEnter = function() {
+  console.info('----------------')
+  // await this.props.getInfo()
+}
+
+
+export default App

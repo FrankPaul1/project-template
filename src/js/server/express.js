@@ -26,6 +26,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use('/api/example/info', (req, res) => {
+  logger.info('========')
   const info = 'information from server'
   res.send(info).end()
   // res.status(500).end()
