@@ -1,35 +1,19 @@
 /**
  * Created by acezou on 15/9/2.
  */
-import { Route as R } from 'react-router'
-import React, { PropTypes } from 'react'
+import { Route as R, RouteUtils } from 'react-router'
 
-export default class Route extends React.Component {
-  static propTypes = {
-    //children: PropTypes.object,
-    //component: PropTypes.object.isRequired,
-  }
-
-  constructor() {
-    super(arguments)
-    console.log('=1=1=1==========')
-  }
-
-  render() {
-    const { children, component, onEnter, ...restProps } = this.props
-    let _onEnter = onEnter
-    console.info(33333333)
-    if (typeof component.onEnter === 'function') {
-      console.info(2222222222222)
-      _onEnter = onEnter ? () => {
-        component.onEnter(arguments)
-        onEnter(arguments)
-      } : component.onEnter
+export default class Route extends R {
+  static createRouteFromReactElement(element) {
+    const route = super.createRouteFromReactElement(element)
+    if(route && route.component && route.component.onEnter) {
+      const _onEnter = route.onEnter
+      route.onEnter = async () => {
+        console.log('okok===============')
+        await route.component.onEnter()
+        if(_onEnter) await _onEnter.call(route.component)
+      }
     }
-    return (
-      <R component={component} onEnter={_onEnter} {...restProps}>
-        {children}
-      </R>
-    )
+    return route
   }
 }

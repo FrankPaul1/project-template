@@ -16,7 +16,6 @@ app.on('error', function (err) {
 })
 
 // Serve static files
-// --------------------------------------------------
 app.use(express.static(path.resolve(config.app.root)))
 app.use(favicon(path.resolve(config.app.root + '/images/favicon.ico')))
 // parse application/x-www-form-urlencoded
@@ -26,7 +25,6 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use('/api/example/info', (req, res) => {
-  logger.info('========')
   const info = 'information from server'
   res.send(info).end()
   // res.status(500).end()
@@ -34,6 +32,13 @@ app.use('/api/example/info', (req, res) => {
 
 app.use((req, res) => {
   render(req, res)
+})
+
+// Catch server error
+app.use((err, req, res, next) => {
+  console.error(`Error on request ${req.method}, ${req.path}`)
+  console.error(err.stack)
+  res.status(500).send('Server error')
 })
 
 const server = app.listen(config.app.port, (err) => {

@@ -59,14 +59,14 @@ export default function render(req, res) {
         await prepareRoute({store, params, location});
       }
 
-      const body = React.renderToStaticMarkup(
-        //const body = React.renderToString(
+      const initialState = store.getState()
+
+      // const body = React.renderToStaticMarkup(
+      const body = React.renderToString(
         <Provider {...{store}}>
-          {() => <Router {...{...routerState, location, history}} />}
+          {() => <ReactRouter {...routerState} />}
         </Provider>
       )
-
-      const initialState = store.getState()
 
       // get js path with hash
       const webpackStatsPath = './webpack-stats.json'

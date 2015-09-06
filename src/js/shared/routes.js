@@ -1,5 +1,5 @@
 import React from 'react'
-import Route from './Route.js'
+import Route from './lib/Route'
 import { App, } from './components'
 
 export default (
