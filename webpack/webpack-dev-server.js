@@ -1,11 +1,11 @@
 require('babel/register')
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
+var webpack = require('webpack')
+var WebpackDevServer = require('webpack-dev-server')
+var config = require('./webpack.config')
 var appConfig = require('../src/js/server/config/config')
-var HOST = process.env.HOST || 'localhost';
+var HOST = process.env.HOST || 'localhost'
 var PORT = appConfig.app.port
-var WEBPACK_PORT = parseInt(process.env.PORT) || 8080;
+var WEBPACK_PORT = parseInt(process.env.PORT) || 8080
 
 new WebpackDevServer(webpack(config), {
   // contentBase: "./dist",
@@ -21,5 +21,5 @@ new WebpackDevServer(webpack(config), {
   }
 }).listen(WEBPACK_PORT, HOST, function (err) {
   if (err) console.log(err);
-  console.log('Listening at ' + HOST + ':' + WEBPACK_PORT);
-});
+  console.log('Listening at ' + HOST + ':' + WEBPACK_PORT)
+})

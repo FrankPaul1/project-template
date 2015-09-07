@@ -8,10 +8,9 @@ export default class Route extends R {
     const route = super.createRouteFromReactElement(element)
     if(route && route.component && route.component.onEnter) {
       const _onEnter = route.onEnter
-      route.onEnter = async () => {
-        console.log('okok===============')
-        await route.component.onEnter()
-        if(_onEnter) await _onEnter.call(route.component)
+      route.onEnter = async function onEnter() {
+        await route.component.onEnter.call(this)
+        if(_onEnter) await _onEnter.call(this)
       }
     }
     return route

@@ -3,6 +3,17 @@
  */
 import initWs from '../shared/lib/initWebsocket'
 /* global __CLIENT__, __ENV__ */
+
+function stringify(type, _msg) {
+  let msg = `"${_msg}"`
+  try {
+    msg = JSON.stringify(msg)
+  } catch (e) {
+    // pass
+  }
+  return `{"type": "${type}", "msg": ${msg}}`
+}
+
 export default function createLogger() {
   let logger
 
@@ -12,15 +23,15 @@ export default function createLogger() {
     logger = {
       debug: (msg) => {
         console.debug(msg)
-        ws.pushMsg(JSON.stringify({type: 'DEBUG', msg}))
+        ws.pushMsg(stringify('DEBUG', msg))
       },
       info: (msg) => {
         console.info(msg)
-        ws.pushMsg(JSON.stringify({type: 'INFO', msg}))
+        ws.pushMsg(stringify('INFO', msg))
       },
       error: (msg) => {
         console.error(msg)
-        ws.pushMsg(JSON.stringify({type: 'ERROR', msg}))
+        ws.pushMsg(stringify('ERROR', msg))
       },
     }
   } else if (__ENV__ === 'production') {

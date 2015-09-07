@@ -5,7 +5,7 @@
 import request from 'superagent'
 import cookie from 'cookie'
 import createAPI from './createAPI'
-// import config from '../../server/config/config'
+import config from '../../server/config/config'
 import { CALL_API } from '../constants/symbol'
 
 function actionWith(action, data) {
@@ -45,7 +45,7 @@ export default (params = {}) => ({dispatch, getState}) => next => _action => {
        */
       ({ method, headers = {}, pathname = '', query = {}, body = {}}) => {
         // const url = `http://${config.app.host}:${config.app.port}${pathname}`
-        const url = `http://localhost:7777${pathname}`
+        const url = `http://${config.app.host}:${config.app.port}${pathname}`
 
         return request(method, url)
           .query(query)

@@ -16,12 +16,14 @@ export default function(initialState, params) {
   } else {
     createStoreWithMiddleware = applyMiddleware(apiMiddleware(params))(createStore)
   }
+  const storeWithMiddleware = createStoreWithMiddleware(reducer, initialState)
+
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
       const nextRootReducer = require('../reducers')
-      store.replaceReducer(nextRootReducer)
+      storeWithMiddleware.replaceReducer(nextRootReducer)
     })
   }
-  return createStoreWithMiddleware(reducer, initialState)
+  return storeWithMiddleware
 }

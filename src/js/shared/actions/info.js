@@ -1,7 +1,7 @@
 /**
  * Created by acezou on 15/9/1.
  */
-import ActionTypes from '../constants/ActionTypes'
+import { Info } from '../constants/ActionTypes'
 import { CALL_API } from '../constants/symbol'
 
 export default {
@@ -17,7 +17,7 @@ export default {
        *              the second and third params is not needed for api function
        */
       [CALL_API]: {
-        types: [ActionTypes.Info.Request, ActionTypes.Info.Success, ActionTypes.Info.Failure],
+        types: [Info.Request, Info.Success, Info.Failure],
         res: api => api('/api/example/info'),
         restInfo: 'rest info',
       },

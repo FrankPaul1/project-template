@@ -1,6 +1,10 @@
-import { DEBUG, INFO, WARN, ERROR } from 'bunyan'
 import path from 'path'
 import _ from 'lodash'
+
+const DEBUG = 'DEBUG'
+const INFO = 'INFO'
+const WARN = 'WARN'
+const ERROR = 'ERROR'
 
 const SYSTEM_PATH = process.cwd()
 const env = (process.env.NODE_ENV && (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production')) ? process.env.NODE_ENV : 'development'

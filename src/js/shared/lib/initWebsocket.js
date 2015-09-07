@@ -2,7 +2,7 @@
  * Created by acezou on 15/8/28.
  */
 
-export default function initWs(url, key, cb = {}) {
+export default function initWebsocket(url, key, cb = {}) {
   let ws = window[key] || new WebSocket(url)
   ws.msgQuene = ws.msgQuene || []
   ws.readySend = false
@@ -11,13 +11,14 @@ export default function initWs(url, key, cb = {}) {
       console.log('start retry connect ws')
       delete window[key]
       window[`${key}_REFRESH_INTER`] = window.setInterval(() => {
-        ws = initWs(url, key, cb)
+        ws = initWebsocket(url, key, cb)
       }, 1000)
     }
   }
 
   ws.onmessage = (e) => {
     try {
+      console.log(`RECEIVED: ${e.data}`, e)
       if (e.data === 'PING') {
         // handler ping pong auto
         ws.readySend = true
@@ -26,7 +27,6 @@ export default function initWs(url, key, cb = {}) {
         ws.readySend = true
         ws.pushMsg('PING')
       } else {
-        console.log(`RECEIVED: ${e.data}`, e)
         if (cb.onmessage) cb.onmessage(ws, e)
       }
     } catch (err) {
