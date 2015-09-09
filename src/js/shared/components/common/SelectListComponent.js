@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react'
 import Radium from 'radium'
-import shallowequal from 'shallowequal'
 import utils from '../../utils'
 
 const style = {
@@ -57,10 +56,10 @@ class SelectListComponent extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!shallowequal(this.props.selectIdList, nextProps.selectIdList)) {
+    if (!utils.equal(this.props.selectIdList, nextProps.selectIdList)) {
       this.setState({selectId: nextProps.selectIdList ? nextProps.selectIdList.sort() : []})
     }
-    if (!shallowequal(this.props.mappingList, nextProps.mappingList)) {
+    if (!utils.equal(this.props.mappingList, nextProps.mappingList)) {
       const mapping = {}
       nextProps.mappingList.forEach(item => {
         mapping[item.id] = item.value

@@ -1,3 +1,27 @@
 html {
     font-size: 13px;
 }
+
+/* 加载动画 */
+/* 为了让页面在下载js文件之前也能有动画效果， 增加如下css */
+@-webkit-keyframes Animation1 {
+    0%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+    50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}
+
+@keyframes Animation1 {
+    0%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+    50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}

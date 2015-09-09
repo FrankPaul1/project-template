@@ -6,7 +6,8 @@ import request from 'superagent'
 import cookie from 'cookie'
 import createAPI from './createAPI'
 import config from '../../server/config/config'
-import { CALL_API } from '../constants/symbol'
+import { Load } from '../constants/ActionTypes'
+import { CALL_API, LOADING_KEY, LOADING_URL } from '../constants/symbol'
 
 function actionWith(action, data) {
   const finalAction = Object.assign({}, action, data)
@@ -30,9 +31,14 @@ export default (params = {}) => ({dispatch, getState}) => next => _action => {
   }
 
   const { res, types, ...rest } = callAPI
-
   const [REQUEST, SUCCESS, FAILURE] = types
-  next(actionWith(action, {...rest, type: REQUEST}))
+  if (REQUEST) next(actionWith(action, {...rest, type: REQUEST}))
+
+  // for loading status manage
+  const loadingUrl = action[LOADING_URL]
+  let loadingKey = REQUEST
+  if (action[LOADING_KEY]) loadingKey = action[LOADING_KEY]
+  if (loadingKey) next({type: Load.loading, [LOADING_KEY]: loadingKey, [LOADING_URL]: loadingUrl})
 
   // api is a function to create a http request to fetch data or update data
   let api
@@ -70,8 +76,13 @@ export default (params = {}) => ({dispatch, getState}) => next => _action => {
   }
 
   return res(api).then(
-    (result) => next(actionWith(action, {...rest, res: result, type: SUCCESS})),
-    (error) => next(actionWith(action, {...rest,
-      error: (error.message || 'Something bad happened'), type: FAILURE}))
+    (result) => {
+      if (loadingKey) next({type: Load.loaded, [LOADING_KEY]: loadingKey, [LOADING_URL]: loadingUrl})
+      next(actionWith(action, {...rest, res: result, type: SUCCESS}))
+    },
+    (error) => {
+      if (loadingKey) next({type: Load.loaded, [LOADING_KEY]: loadingKey, [LOADING_URL]: loadingUrl})
+      next(actionWith(action, {...rest, error: (error.message || 'Something bad happened'), type: FAILURE}))
+    }
   )
 }

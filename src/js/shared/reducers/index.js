@@ -11,4 +11,5 @@ export function errorMessage(state = null, { type, error }) {
   return state
 }
 
+export { default as Load } from './Load'
 export { default as Info } from './Info'

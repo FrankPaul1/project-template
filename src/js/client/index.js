@@ -15,9 +15,7 @@ import '../../css/global.css'
 
 // create global logger, use logger.debug && logger.info && logger.log && logger.error everywhere
 window.logger = createLogger()
-
 const history = new History()
-
 const store = createStore((window.__INITIAL_STATE__ || {}))
 
 if (window.__ENV__ === 'development') {

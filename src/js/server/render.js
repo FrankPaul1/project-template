@@ -14,6 +14,10 @@ import Router from '../shared/AppRouter'
 import { Provider } from 'react-redux'
 import { config } from './config'
 
+import { Load } from '../shared/constants/ActionTypes'
+import { LOADING_URL, CALL_API } from '../shared/constants/symbol'
+import { generateLoadingUrl } from '../shared/reducers/Load'
+
 function generateCssRef(webpackStats) {
   let cssRef = ''
   webpackStats.css.map(_style => {
@@ -54,9 +58,18 @@ export default function render(req, res) {
 
       for (let prepareRoute of prepareRouteMethods) {
         if (!prepareRoute) {
-          continue;
+          continue
         }
-        await prepareRoute({store, params, location});
+
+        const _dispatch = store.dispatch
+        const loadingUrl = generateLoadingUrl(location)
+        _dispatch({type: Load.clear, [LOADING_URL]: loadingUrl})
+        const dispatch = async (action) => {
+          if (action[CALL_API]) action[LOADING_URL] = loadingUrl
+          await _dispatch(action)
+        }
+
+        await prepareRoute({store, params, location, dispatch})
       }
 
       const initialState = store.getState()
@@ -84,7 +97,7 @@ export default function render(req, res) {
 				<!DOCTYPE html>
 				<html>
 				<head>
-			    <title>杏树林后台</title>
+			    <title>杏树林</title>
 			    ${generateCssRef(webpackStats)}
 				</head>
 				<body>
