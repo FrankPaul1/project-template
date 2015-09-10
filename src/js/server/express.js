@@ -26,7 +26,7 @@ app.use(cookieParser())
 
 app.use('/api/example/info', (req, res) => {
   const info = `information from server, ${Date.now()}`
-  setTimeout(() => (res.send(info).end()), 10000)
+  setTimeout(() => (res.send(info).end()), 1000)
   // res.send(info).end()
   // res.status(500).end()
 })

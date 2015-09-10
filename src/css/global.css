@@ -4,17 +4,23 @@ html {
 
 /* 加载动画 */
 /* 为了让页面在下载js文件之前也能有动画效果， 增加如下css */
+.spinner-page .double-bounce1, .spinner-page .double-bounce2 {
+    -webkit-animation: Animation1 2.0s infinite ease-in-out;
+    animation: Animation1 2.0s infinite ease-in-out;
+}
+.spinner-page .double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+/* 以下动画必须命名为Animation1 -- Radium定义的命名 */
 @-webkit-keyframes Animation1 {
     0%, 100% {
-        transform: scale(0.0);
         -webkit-transform: scale(0.0);
     }
     50% {
-        transform: scale(1.0);
         -webkit-transform: scale(1.0);
     }
 }
-
 @keyframes Animation1 {
     0%, 100% {
         transform: scale(0.0);

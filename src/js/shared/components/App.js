@@ -29,6 +29,11 @@ class App extends React.Component {
     location: PropTypes.object.isRequired,
   }
 
+  constructor(p, c) {
+    super(p, c)
+    this.state = {}
+  }
+
   render() {
     // you can log information anywhere, which will also log on server console
     // logger is global variable, support log & info & debug & error
